@@ -17,22 +17,41 @@ get '/articles' do
 end
 
 get '/articles/new' do
-  erb :show_new
+  erb :show_new, locals: {url: params["url"]}
 end
 
 post '/articles/new' do
   erb :show_new, locals: {article_title: params["article_title"],
                           url: params["url"],
                           description: params["description"]}
-
-  # CSV.open('news_database.csv', "a", headers: true) do |file|
-  #   file << [params["article_title"], params["url"], params["description"]]
-  # end
+  begin
   db_connection do |conn|
-    conn.exec_params("INSERT INTO articles (article_title, url, description) VALUES ($3)", [params["article_title"]], [params["url"]], [params["description"]])
+    conn.exec_params("INSERT INTO articles (article_title, url, description) VALUES ($1, $2, $3)", [params["article_title"], params["url"], params["description"]]);
+    # binding.pry
   end
+    redirect '/articles'
+  rescue
+    redirect '/articles/new/error'
+  end
+end
 
-  redirect '/articles'
+get '/articles/new/error' do
+  erb :error, locals: {url: params["url"]}
+end
+
+post '/articles/new/error' do
+  erb :error, locals: {article_title: params["article_title"],
+                          url: params["url"],
+                          description: params["description"]}
+  begin
+  db_connection do |conn|
+    conn.exec_params("INSERT INTO articles (article_title, url, description) VALUES ($1, $2, $3)", [params["article_title"], params["url"], params["description"]]);
+    # binding.pry
+  end
+    redirect '/articles'
+  rescue
+    redirect '/articles/new/error'
+  end
 end
 
 # get 'articles/error' do

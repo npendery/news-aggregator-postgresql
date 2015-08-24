@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Post Article</title>
+  </head>
+
+  <body>
+    <a>Your URL input is already is posted, please use another URL</a>
+    <p></p>
+    <fieldset name="task">
+      <legend>Post New Article</legend>
+
+        <form action="/articles/new" method="post">
+          <label for="article_title">Article Title:</label>
+          <input type="text" id = "article_title" name="article_title" required>
+
+          <label for="url">Article URL:</label>
+          <input type="url" id = "url" name="url" required>
+
+          <label for="description">Article Description:</label>
+          <input type="text" id = "description" name="description" required>
+
+          <input type="submit">
+        </form>
+      </fieldset>
+  </body>
+</html>
