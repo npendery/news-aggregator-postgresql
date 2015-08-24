@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Article Forum</title>
+  </head>
+
+  <body>
+    <h1>Available Articles</h1>
+    <ul>
+      <% post_list.each do |article|%>
+        <li><a>Name: <%= article["article_title"] %> |<a>
+            <a>Description: <%= article["description"] %> |</a>
+            <a href= <%= article["url"] %>>Link</a>
+        </li>
+      <% end %>
+    </ul>
+    <h2><a href="/articles/new">Add new article</a></h2>
+
+  </body>
+</html>
